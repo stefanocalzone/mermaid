@@ -3,25 +3,99 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Mermaid Quick Test Page</title>
+    <title>Info | Mermaid Quick Test Page</title>
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgo=" />
     <style>
+      body {
+        max-width: 52rem;
+        margin: 0 auto;
+        padding: 1rem 1.25rem 2rem;
+        line-height: 1.5;
+        font-family: system-ui, sans-serif;
+      }
+      h1 {
+        margin-bottom: 0.25rem;
+      }
+      .lede {
+        color: #333;
+        margin-top: 0;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin: 1.75rem 0 0.5rem;
+      }
+      .note {
+        font-size: 0.9rem;
+        color: #444;
+        border-left: 3px solid #ccc;
+        padding-left: 0.75rem;
+        margin: 0.75rem 0 1rem;
+      }
+      pre.mermaid,
       div.mermaid {
         font-family: 'Courier New', Courier, monospace !important;
+      }
+      pre.code {
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.85rem;
+        background: #f5f5f5;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 0.65rem 0.85rem;
+        overflow-x: auto;
+        margin: 0.5rem 0 1rem;
+      }
+      dl.syntax {
+        margin: 0.5rem 0 1.25rem;
+      }
+      dl.syntax dt {
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+      dl.syntax dd {
+        margin: 0.15rem 0 0 0;
       }
     </style>
   </head>
 
   <body>
     <h1>Info diagram demos</h1>
+    <p class="lede">
+      The <strong>info</strong> diagram is a minimal built-in type: it renders a single line of text
+      with the Mermaid version bundled in this page’s script. It is useful for smoke tests, E2E
+      checks, and confirming which build you are running.
+    </p>
+    <p class="note">
+      There is no title, shape, or layout to customize. Optional keyword <code>showInfo</code> is
+      accepted by the grammar but does not change the SVG; both forms below should look identical.
+    </p>
+
+    <h2>Supported syntax</h2>
+    <dl class="syntax">
+      <dt><code>info</code></dt>
+      <dd>Minimal definition (only the diagram keyword).</dd>
+      <dt><code>info showInfo</code></dt>
+      <dd>Same output; <code>showInfo</code> may appear on the same line or the next line.</dd>
+    </dl>
+
+    <h2>Example: <code>info</code></h2>
     <pre class="mermaid">
       info
     </pre>
 
     <hr />
+
+    <h2>Example: <code>info showInfo</code></h2>
     <pre class="mermaid">
       info showInfo
     </pre>
+
+    <h2>Equivalent multiline (parser)</h2>
+    <p>The Langium grammar also allows a line break before <code>showInfo</code>:</p>
+    <pre class="code">
+info
+showInfo</pre
+    >
 
     <script type="module">
       import mermaid from './mermaid.esm.mjs';
