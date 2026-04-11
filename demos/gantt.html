@@ -56,7 +56,7 @@
       section Airworks 3.4.1
       开发	:b, 2021-10-07, 5d
       测试	:after b, 4d
-      OK  :milestore
+      OK :milestone, ok1, 2021-10-15, 0d
       section Airworks 3.4.2
       开发	:a, 2021-10-09, 4d
       测试	:after a, 4d
@@ -89,22 +89,24 @@
     <pre class="mermaid">
     gantt
     title Hide today marker (vertical line should not be visible)
-    dateFormat Z
-    axisFormat %d/%m
+    dateFormat YYYY-MM-DD
+    axisFormat %d
     todayMarker off
     section Section1
-    Today: 1, 08-08-09-01:00, 5min
+     Yesterday: 1010-10-09, 1d
+     Today: 1010-10-10, 1d
     </pre>
     <hr />
 
     <pre class="mermaid">
     gantt
     title Style today marker (vertical line should be 5px wide and half-transparent blue)
-    dateFormat Z
-    axisFormat %d/%m
+    dateFormat YYYY-MM-DD
+    axisFormat %d
     todayMarker stroke-width:5px,stroke:#00f,opacity:0.5
     section Section1
-    Today: 1, 08-08-09-01:00, 5min
+     Yesterday: 1010-10-09, 1d
+     Today: 1010-10-10, 1d
     </pre>
     <hr />
 
@@ -182,9 +184,7 @@
     <hr />
 
     <pre class="mermaid">
-    ---
-      displayMode: compact
-    ---
+    %%{init: { 'gantt': { 'displayMode': 'compact' } } }%%
     gantt
     title GANTT compact
     dateFormat  HH:mm:ss
