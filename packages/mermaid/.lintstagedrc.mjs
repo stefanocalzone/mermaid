@@ -1,8 +1,9 @@
-import baseConfig from '../../.lintstagedrc.mjs';
+import baseConfig, { runPnpm } from '../../.lintstagedrc.mjs';
+
 export default {
   ...baseConfig,
-  'src/docs/**': ['pnpm --filter mermaid run docs:build --git'],
-  'src/docs.mts': ['pnpm --filter mermaid run docs:build --git'],
-  'src/(defaultConfig|config|mermaidAPI).ts': ['pnpm --filter mermaid run docs:build --git'],
-  'src/schemas/config.schema.yaml': ['pnpm --filter mermaid run types:build-config --git'],
+  'src/docs/**': [`${runPnpm} --filter mermaid run docs:build --git`],
+  'src/docs.mts': [`${runPnpm} --filter mermaid run docs:build --git`],
+  'src/(defaultConfig|config|mermaidAPI).ts': [`${runPnpm} --filter mermaid run docs:build --git`],
+  'src/schemas/config.schema.yaml': [`${runPnpm} --filter mermaid run types:build-config --git`],
 };

@@ -1,3 +1,6 @@
+/** Via npx so hooks work when `pnpm` is not on PATH (e.g. GitHub Desktop + Homebrew Node). Match package.json#packageManager. */
+export const runPnpm = 'npx --yes pnpm@10.30.3';
+
 export default {
   '!(docs/**/*)*.{ts,js,html,md,mts}': [
     'eslint --cache --cache-strategy content --fix',
@@ -7,5 +10,5 @@ export default {
     'prettier --write',
   ],
   '.cspell/*.txt': ['tsx scripts/fixCSpell.ts'],
-  '**/*.jison': ['pnpm -w run lint:jison'],
+  '**/*.jison': [`${runPnpm} -w run lint:jison`],
 };

@@ -1,2 +1,55 @@
 #!/usr/bin/env sh
-NODE_OPTIONS="--max_old_space_size=8192" pnpm run pre-commit
+# Git GUI apps (e.g. GitHub Desktop) use a minimal PATH; Homebrew Node often has no `corepack` shim.
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:$HOME/.local/bin:$HOME/Library/pnpm:$PATH"
+
+# Load common Node version managers (normally only set in interactive shells).
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env 2>/dev/null)" || true
+fi
+
+NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  # shellcheck disable=SC1090
+  . "$NVM_DIR/nvm.sh"
+fi
+
+if [ -f "$HOME/.asdf/asdf.sh" ]; then
+  # shellcheck disable=SC1090
+  . "$HOME/.asdf/asdf.sh"
+fi
+
+if [ -s "$HOME/.volta/load.sh" ]; then
+  # shellcheck disable=SC1090
+  . "$HOME/.volta/load.sh"
+fi
+
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate sh 2>/dev/null)" || true
+fi
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+[ -n "$ROOT" ] || ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$ROOT" || exit 1
+
+export NODE_OPTIONS="--max_old_space_size=8192"
+
+# Same as `pnpm run pre-commit` → lint-staged; no global pnpm/corepack required.
+if [ -x "node_modules/.bin/lint-staged" ]; then
+  exec node_modules/.bin/lint-staged
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+  exec pnpm run pre-commit
+fi
+
+if command -v corepack >/dev/null 2>&1; then
+  exec corepack pnpm run pre-commit
+fi
+
+# Homebrew node includes npm/npx; fetch pnpm if needed (matches package.json packageManager major).
+if command -v npm >/dev/null 2>&1; then
+  exec npm exec --yes --package=pnpm@10.30.3 -- pnpm run pre-commit
+fi
+
+echo "husky(pre-commit): need Node on PATH and dependencies (run: pnpm install)." >&2
+exit 127

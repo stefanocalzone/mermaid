@@ -7,10 +7,19 @@ services:
     tty: true
     working_dir: /mermaid
     mem_limit: '8G'
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
     env_file:
       - .env
+    environment:
+      # Keep pnpm store off the macOS bind mount (avoids ENFILE / file table overflow on Docker Desktop).
+      npm_config_store_dir: /pnpm-store
     volumes:
-      - ./:/mermaid
+      - ./:/mermaid:delegated
+      - mermaid_node_modules:/mermaid/node_modules
+      - mermaid_pnpm_store:/pnpm-store
       - root_cache:/root/.cache
       - root_local:/root/.local
       - root_npm:/root/.npm
@@ -28,7 +37,8 @@ services:
     environment:
       - DISPLAY
     volumes:
-      - ./:/mermaid
+      - ./:/mermaid:delegated
+      - mermaid_node_modules:/mermaid/node_modules
       - /tmp/.X11-unix:/tmp/.X11-unix
     network_mode: host
 
@@ -36,3 +46,5 @@ volumes:
   root_cache:
   root_local:
   root_npm:
+  mermaid_node_modules:
+  mermaid_pnpm_store:

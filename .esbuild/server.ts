@@ -93,7 +93,8 @@ async function createServer() {
   chokidar
     .watch('**/src/**/*.{js,ts,langium,yaml,json}', {
       ignoreInitial: true,
-      ignored: [/node_modules/, /dist/, /docs/, /coverage/],
+      // .pnpm-store can live on the repo root (e.g. host pnpm); watching it causes ENFILE on Docker/macOS.
+      ignored: [/node_modules/, /dist/, /docs/, /coverage/, /\.pnpm-store/, /\.git/],
     })
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     .on('all', async (event, path) => {

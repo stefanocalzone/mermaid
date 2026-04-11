@@ -106,6 +106,11 @@ Then install packages:
 ./run pnpm install
 ```
 
+> **Note**
+> Commits run a [Husky](https://typicode.github.io/husky/) `pre-commit` hook (`lint-staged`). It expects a **`node_modules` directory on the machine where Git runs** (the hook uses `node_modules/.bin/lint-staged`). If you only install dependencies inside Docker, GUI clients such as **GitHub Desktop** may fail the hook because `pnpm` or `lint-staged` is not available in that environment. Run **`pnpm install` once on the host** in the repository root, and run it again after a **clean clone** or if you **delete `node_modules`**.
+>
+> If you change **`packageManager`** in the root `package.json`, also update the **`runPnpm`** string in **`.lintstagedrc.mjs`** to the same pnpm version so pre-commit `lint-staged` tasks keep working when `pnpm` is not on `PATH`.
+
 ### Verify Everything Works
 
 This step is optional, but it helps to make sure that everything in development branch was OK before you started making any changes.
