@@ -441,6 +441,17 @@ Mermaid is a growing community and is always accepting new contributors. There's
 
 Detailed information about how to contribute can be found in the [contribution guide](https://mermaid.js.org/community/contributing.html)
 
+### Documentation site with Docker
+
+With [Docker](https://docs.docker.com/engine/install/) (for example Docker Desktop) and the repo set up as in the contribution guide (`./run build`, `./run pnpm install`, and a `.env` with `MERMAID_PORT` if needed), start the documentation site from the **repository root**:
+
+```bash
+cd /path/to/mermaid
+./run docs:dev
+```
+
+Then open [http://localhost:3333/](http://localhost:3333/). For the esbuild dev server and demos on port 9000, use `./run dev` instead.
+
 ## Security and safe diagrams
 
 For public sites, it can be precarious to retrieve text from users on the internet, storing that content for presentation in a browser at a later stage. The reason is that the user content can contain embedded malicious scripts that will run when the data is presented. For Mermaid this is a risk, specially as mermaid diagrams contain many characters that are used in html which makes the standard sanitation unusable as it also breaks the diagrams. We still make an effort to sanitize the incoming code and keep refining the process but it is hard to guarantee that there are no loop holes.

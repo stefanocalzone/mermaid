@@ -38,7 +38,7 @@
         +quack()
       }
       class Fish{
-        -Listint sizeInFeet
+        -List~int~ sizeInFeet
         -canEat()
       }
       class Zebra{
@@ -156,7 +156,7 @@
         ~InternalProperty : string
         ~AnotherInternalProperty : List~List~string~~
       }
-      class People List~List~Person~~
+      class People["List&lt;List&lt;Person&gt;&gt;"]
     </pre>
     <hr />
     <pre class="mermaid">
